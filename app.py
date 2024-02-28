@@ -216,7 +216,8 @@ def generate_charts():
     st.write("By reframing the text, the insights from each chart are presented clearly and concisely, making it easier for the reader to understand the findings")
 
 if st.button('Generate Charts'):
-    st.title('Exploratory Data Analysis')
+    st.title(':bar_chart: Exploratory Data Analysis')
+    st.markdown('<style>div.block-container{padding_top:1rem;}</style>',unsafe_allow_html=True)
     generate_charts()
 st.divider()
 # Input widgets
