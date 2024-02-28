@@ -221,7 +221,6 @@ if st.button('Generate Charts'):
 st.divider()
 # Input widgets
 st.title('Prediction')
-st.subheader('Brand Encoding List')
 BRAND = (st.selectbox('***Brand***', (df['BRAND'].unique())))
 num_ratings = st.slider('***Number of Ratings(by No of person)***', 0, 1500000,1000)
 Battery = st.number_input('***Battery***', min_value=0, step=1)
