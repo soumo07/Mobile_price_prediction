@@ -190,9 +190,9 @@ def generate_charts():
     palette = sns.color_palette("bright", len(df['Encoding_Brand'].unique()))
     sns.barplot(x=df['Encoding_Brand'], y=df['Number of Ratings'], ax=ax[0],palette=palette)
 
-    sns.lineplot(x=df['Encoding_Brand'], y=df['Encoding_Brand'], ax=ax[1],palette=palette)
+    sns.lineplot(x=df['Encoding_Brand'], y=df['Number of Ratings'], ax=ax[1],palette=palette)
     ax[0].set_xticks([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-    fig.suptitle('Encoding_Brand vs Encoding_Brand', fontsize=20)
+    fig.suptitle('Encoding_Brand vs Number of Ratings', fontsize=20)
     st.pyplot(fig)
     st.subheader("Insights")
     st.write("***Correlation Analysis (Chart-1)***: The correlation analysis revealed that features like ROM(GB), RAM(GB), Battery, Brand, and Camera are significant factors influencing the price of a mobile phone.")
