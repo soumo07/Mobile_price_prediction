@@ -88,6 +88,8 @@ train_data_model = train_data[['Encoding_Brand', 'Number of Ratings','Battery', 
 
 train_data_model_X = train_data_model.iloc[:, :-1]
 train_data_model_Y = train_data_model.iloc[:, -1]
+brand_map = {'Alcatel':0,'Apple':1,'Google':2,'Huawei':3,'Infinix':4,'Lenovo':5,
+'Motorola':6,'Nokia':7,'Nothing':8,'OPPO':9,'OnePlus':10,'POCO':11,'Realme':12,'Samsung':13,'Vivo':14,'Xiaomi':15}
 
 
 
@@ -220,22 +222,28 @@ st.divider()
 # Input widgets
 st.title('Prediction')
 st.subheader('Brand Encoding List')
-st.write("AlCatel=0,Apple=1,Google=2,Huawei=3,Infinix=4,Lenovo=5,Motorola=6,Nokia=7,Nothing=8,Oppo=9,OnePlus=10,Poco=11,Realme=12,Samsung=13,Vivo=14,Xiaomi=15")
-Encoding_Brand = int(st.selectbox('***Brand***', np.sort(df['Encoding_Brand'].unique())))
+BRAND = (st.selectbox('***Brand***', (df['BRAND'].unique())))
 num_ratings = st.slider('***Number of Ratings(by No of person)***', 0, 1500000,1000)
 Battery = st.number_input('***Battery***', min_value=0, step=1)
 rating = st.number_input('***Rating(Range-(0-5))***', min_value=0.0, max_value=5.0, step=0.1)
 rom = st.number_input('***ROM(GB)***', min_value=0, step=1)
 ram = st.number_input('***RAM(GB)***', min_value=0, step=1)
-back_cam_score = st.number_input('***No of Back Camera ***', min_value=0, step=1)
-front_cam_score = st.number_input('***No of Front Camera ***', min_value=0, step=1)
+back_cam_score = st.number_input('***No of Back Camera***', min_value=0, step=1)
+front_cam_score = st.number_input('***No of Front Camera***', min_value=0, step=1)
 Main_Back_Camera= st.selectbox('***Main Back Camera***', np.sort(df['Main_Back_Camera'].unique()))
 Main_Front_Camera=st.selectbox('***Main Front Camera***', np.sort(df['Main_Front_Camera'].unique()))
     # Predict the price
-input_data = [[Encoding_Brand,num_ratings,Battery, rating, rom, ram, back_cam_score, front_cam_score,Main_Back_Camera, Main_Front_Camera]]
-st.write(input_data)
+Brand_encoded = brand_map[BRAND]
+input_data = [[Brand_encoded,num_ratings,Battery, rating, rom, ram, back_cam_score, front_cam_score,Main_Back_Camera, Main_Front_Camera]]
+input_df = pd.DataFrame({
+    'Value': [BRAND, num_ratings, Battery, rating, rom, ram, back_cam_score, front_cam_score,
+              Main_Back_Camera,Main_Front_Camera]},
+    index=['BRAND', 'Number of Ratings(by No of person)', 'Battery', 'Rating(Range-(0-5))',
+           'ROM(GB)', 'RAM(GB)', 'No of Back Camera', 'No of Front Camera','Main Back Camera',
+           'Main Front Camera']).T
+st.table(input_df)
 
-    # Display the predicted price
+# Display the predicted price
 if st.button("Predict Price"):
     predicted_price = loaded_model.predict(input_data)[0]
     st.write(f"Receive an estimated price for your anticipated phone: ₹{predicted_price:.2f}")
